@@ -45,4 +45,12 @@ export class LivrosService {
       password,
     });
   }
+
+  static Users(token) {
+    return axios.get(`${BASE_URL}/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

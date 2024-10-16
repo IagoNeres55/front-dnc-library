@@ -7,6 +7,7 @@ import Livros from "./views/Livros/Livros";
 import LivrosCadastro from "./views/LivrosCadastro/LivrosCadastro";
 import LivrosEdicao from "./views/LivrosEdicao/LivrosEdicao";
 import App from "./App";
+import Autores from "./views/Autores/Autories";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/livros/edicao/:livroId",
         element: <LivrosEdicao />,
+      },
+      {
+        path: "/autores",
+        element: <Autores />,
       },
     ],
   },

@@ -10,8 +10,8 @@ import Spinner from "../../components/Spinner/Spinner";
 const Home = () => {
   const navigate = useNavigate();
 
-  const handlePageLivros = () => {
-    navigate("/livros");
+  const handlePage = (page) => {
+    navigate(`/${page}`, { state: login });
   };
 
   const { openModal, closeModal, isModalOpen } = useModal();
@@ -19,14 +19,22 @@ const Home = () => {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState();
   const [isLoading, setisLoading] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
     const dados_login = localStorage.getItem("user_login");
+
     if (!dados_login) {
       setLogin();
       return;
     }
-    setLogin(dados_login);
+    try {
+      const parsedData = JSON.parse(dados_login);
+      setLogin(parsedData);
+    } catch (error) {
+      console.error("Erro ao fazer JSON.parse:", error);
+      setLogin(null); 
+    }
   }, []);
 
   const cleanStorage = () => {
@@ -39,9 +47,20 @@ const Home = () => {
     try {
       const res = await LivrosService.login(email, password);
       setLogin(res.data);
+      localStorage.setItem("user_login", JSON.stringify(res.data));
       closeModal("login");
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        const errorMessage =
+          error.response.data.error[0]?.message ||
+          "Ocorreu um erro inesperado.";
+        setError(errorMessage);
+      } else {
+        setError("Erro ao tentar fazer login.");
+      }
+      setTimeout(() => {
+        setError(null);
+      }, 6000);
     } finally {
       setisLoading(false);
     }
@@ -51,8 +70,8 @@ const Home = () => {
     <div className="home">
       <h1>Biblioteca Central Online - Livros</h1>
       <div>
-        <Button onClick={handlePageLivros}>Ver Livros</Button>
-        <Button onClick={() => {}}>Usuários</Button>
+        <Button onClick={() => handlePage("livros")}>Ver Livros</Button>
+        <Button onClick={() => handlePage("autores")}>Ver Autores</Button>
       </div>
 
       {login ? (
@@ -68,11 +87,11 @@ const Home = () => {
 
       <Modal isOpen={isModalOpen("login")} onClose={() => closeModal("login")}>
         <h2>Login</h2>
-
+        {error && <h4 className="textoErro">{error}</h4>}
         {isLoading ? (
           <Spinner />
         ) : (
-          <form className="form">
+          <form className="form" onSubmit={handleLogin} >
             <input
               className="inputForm"
               type="text"
@@ -96,8 +115,9 @@ const Home = () => {
           <Button color="#ff7777" onClick={() => closeModal("login")}>
             Fechar
           </Button>
+
           {email.length > 5 && password.length > 5 ? (
-            <Button onClick={() => handleLogin()}>Entrar</Button>
+            <Button type="submit" onClick={() => handleLogin()}>Entrar</Button>
           ) : (
             <Button>Entrar</Button>
           )}
