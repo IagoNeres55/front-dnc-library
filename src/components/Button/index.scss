@@ -1,0 +1,23 @@
+.section-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  margin: 10px 0px;
+  width: 35%;
+  height: 40px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 5px;
+  background-color: blue;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: rgb(96, 96, 255);
+}
