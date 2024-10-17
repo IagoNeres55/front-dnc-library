@@ -7,10 +7,16 @@ import { Link } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
 
 const Livros = () => {
+  const userLogin = JSON.parse(localStorage.getItem("user_login"));
+
+  if (!userLogin) {
+    navigate("/");
+  }
   const [livros, setLivros] = useState([]);
   const [isloading, setIsLoading] = useState(false);
 
   async function getLivros() {
+    event.preventDefault()
     setIsLoading(true);
     try {
       const { data } = await LivrosService.getLivros();
@@ -23,21 +29,21 @@ const Livros = () => {
     }
   }
 
-  // async function deleteLivro(livroId) {
-  //   let valida = confirm(
-  //     `Você realmente deseja remover o livro de ID: ${livroId}`
-  //   );
-  //   if (valida) {
-  //     await LivrosService.deleteLivro(livroId)
-  //       .then(({ data }) => {
-  //         alert(data.mensagem);
-  //         getLivros();
-  //       })
-  //       .catch(({ response: { data, status } }) => {
-  //         alert(`${status} - ${data.mensagem}`);
-  //       });
-  //   }
-  // }
+  async function deleteLivro(livroId) {
+    let valida = confirm(
+      `Você realmente deseja remover o livro de ID: ${livroId}`
+    );
+    if (valida) {
+      await LivrosService.deleteLivro(livroId, userLogin.token)
+        .then(({ data }) => {
+          alert(data.message);
+          getLivros();
+        })
+        .catch(({ response: { data, status } }) => {
+          alert(`${status} - ${data.message}`);
+        });
+    }
+  }
 
   useEffect(() => {
     getLivros();

@@ -32,7 +32,7 @@ export class LivrosService {
   }
 
   static deleteLivro(id, token) {
-    return axios.delete(`${BASE_URL}/livros/${id}`, {
+    return axios.delete(`${BASE_URL}/books/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
