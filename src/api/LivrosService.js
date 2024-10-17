@@ -8,7 +8,7 @@ export class LivrosService {
   }
 
   static getLivro(id, token) {
-    return axios.get(`${BASE_URL}/livros/${id}`, {
+    return axios.get(`${BASE_URL}/books/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,7 +24,7 @@ export class LivrosService {
   }
 
   static updateLivro(id, body, token) {
-    return axios.put(`${BASE_URL}/livros/${id}`, body, {
+    return axios.put(`${BASE_URL}/books/${id}`, body, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

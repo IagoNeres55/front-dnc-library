@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.scss";
 import Button from "../Button/Button";
 import { LivrosService } from "../../api/LivrosService";
@@ -9,11 +9,12 @@ export default function Register({ handleCloseModal, handleOpenLogin }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [msgError, setMsgError] = useState("");
 
   const payload = {
     name: name,
     email: email,
-    password: senha
+    password: senha,
   };
 
   const createUser = async () => {
@@ -21,15 +22,20 @@ export default function Register({ handleCloseModal, handleOpenLogin }) {
     try {
       const res = await LivrosService.CreateUser(payload);
       console.log(res.data);
-
       handleCloseModal();
       handleOpenLogin();
     } catch (err) {
       console.error(err);
+      setMsgError(err.response.data.error[0]?.message);
     } finally {
       setisLoading(false);
     }
   };
+
+
+    useEffect(()=>{
+      setMsgError("")
+    }, [name, email, senha])
 
   return (
     <div>
@@ -38,6 +44,8 @@ export default function Register({ handleCloseModal, handleOpenLogin }) {
       ) : (
         <form action="submit" className="form">
           <h2 className="text-title">Registrar</h2>
+          <p className="errorText">{msgError}</p>
+
           <input
             className="inputForm"
             type="text"
