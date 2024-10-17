@@ -53,4 +53,8 @@ export class LivrosService {
       },
     });
   }
+
+  static CreateUser(body) {
+    return axios.post(`${BASE_URL}/user`, body);
+  }
 }

@@ -7,15 +7,12 @@ const LivrosCadastro = () => {
 
   async function createLivro() {
     const body = {
-      id: Number(livro.id),
       titulo: livro.titulo,
       num_paginas: Number(livro.num_paginas),
       isbn: livro.isbn,
       editora: livro.editora,
     };
     if (
-      livro.id != undefined &&
-      livro.id != "" &&
       livro.titulo != undefined &&
       livro.titulo != "" &&
       livro.num_paginas != undefined &&
@@ -42,17 +39,6 @@ const LivrosCadastro = () => {
         <h1>Cadastro de Livros</h1>
         <div>
           <form id="formulario">
-            <div className="form-group">
-              <label>Id</label>
-              <input
-                type="text"
-                id="id"
-                required
-                onChange={(event) => {
-                  setLivro({ ...livro, id: event.target.value });
-                }}
-              ></input>
-            </div>
             <div className="form-group">
               <label>Titulo</label>
               <input

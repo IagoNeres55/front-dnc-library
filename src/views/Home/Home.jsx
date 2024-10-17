@@ -6,6 +6,7 @@ import Modal from "../../components/Modal/Modal";
 import useModal from "../../hook/hookModal";
 import { LivrosService } from "../../api/LivrosService";
 import Spinner from "../../components/Spinner/Spinner";
+import Register from "../../components/Register/register";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Home = () => {
       setLogin(parsedData);
     } catch (error) {
       console.error("Erro ao fazer JSON.parse:", error);
-      setLogin(null); 
+      setLogin(null);
     }
   }, []);
 
@@ -91,7 +92,7 @@ const Home = () => {
         {isLoading ? (
           <Spinner />
         ) : (
-          <form className="form" onSubmit={handleLogin} >
+          <form className="form" onSubmit={handleLogin}>
             <input
               className="inputForm"
               type="text"
@@ -117,7 +118,9 @@ const Home = () => {
           </Button>
 
           {email.length > 5 && password.length > 5 ? (
-            <Button type="submit" onClick={() => handleLogin()}>Entrar</Button>
+            <Button type="submit" onClick={() => handleLogin()}>
+              Entrar
+            </Button>
           ) : (
             <Button>Entrar</Button>
           )}
@@ -127,8 +130,8 @@ const Home = () => {
         isOpen={isModalOpen("register")}
         onClose={() => closeModal("register")}
       >
-        <h2>Cadastro</h2>
-        <Button onClick={() => closeModal("register")}>Fechar</Button>
+        <Register handleCloseModal={() => closeModal('register')} handleOpenLogin={() => openModal('login')}  />
+       
       </Modal>
     </div>
   );
