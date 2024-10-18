@@ -1,8 +1,20 @@
-.container-card{
+.autores {
+  flex-direction: column;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
+.title-autores {
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.container-card {
+  display: flex;
+  flex-wrap: wrap;
+  width: 89%;
+}
 .card {
   position: relative;
   background: #ffffff;
@@ -18,7 +30,7 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   }
 
-.background {
+  .background {
     position: absolute;
     top: 0;
     left: 0;
@@ -28,7 +40,7 @@
     z-index: 1;
   }
 
-.content {
+  .content {
     position: relative;
     z-index: 2;
     color: white;
