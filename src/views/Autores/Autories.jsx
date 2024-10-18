@@ -38,7 +38,7 @@ const Autores = () => {
   return (
     <>
       <div className="livros">
-        <h1>Autores</h1>
+        <h1 className="">Autores</h1>
 
         {toast && (
           <Toast
