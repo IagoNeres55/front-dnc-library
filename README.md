@@ -1,7 +1,5 @@
 
-# projeto-react-api-node
-
-Projeto em React com API simples em Node.
+# Acesse link do site: https://dnc-library.netlify.app/
 
 # Desenvolvido por
 
@@ -15,3 +13,11 @@ npm ou yarn - npm install ou yarn add install
 
 desenvolvimento: npm run dev
 build: npm run build
+
+
+# Observações:
+
+Tomei a liberdade de adicionar um sistema de login ao projeto sendo assim somente pessoas que criarem seus livro poderão editados. BackEnd utiliza o token e validações de inputs 
+como middwares para segurança das rotas.
+
+
