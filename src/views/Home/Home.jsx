@@ -6,7 +6,7 @@ import Modal from "../../components/Modal/Modal";
 import useModal from "../../hook/hookModal";
 import { LivrosService } from "../../api/LivrosService";
 import Spinner from "../../components/Spinner/Spinner";
-import Register from "../../components/Register/register";
+import Register from "../../components/Register/Register";
 
 const Home = () => {
   const navigate = useNavigate();

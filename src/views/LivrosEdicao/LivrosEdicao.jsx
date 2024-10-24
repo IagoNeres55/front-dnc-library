@@ -8,14 +8,23 @@ import { LivrosService } from "../../api/LivrosService";
 const LivrosEdicao = () => {
   const { bookId } = useParams();
   const [responseBook, setResponseBook] = useState(false);
+  const [userOff, setUserOff] = useState(false);
 
   const [livro, setLivro] = useState([]);
 
   const userLogin = JSON.parse(localStorage.getItem("user_login"));
 
-  if (!userLogin) {
-    navigate("/");
-  }
+  const validaLogin = () => {
+    if (!userLogin) {
+      setUserOff(true);
+    } else {
+      setUserOff(false);
+    }
+  };
+
+  useEffect(() => {
+    validaLogin();
+  }, [userLogin]);
 
   async function getLivro() {
     try {
@@ -68,63 +77,69 @@ const LivrosEdicao = () => {
 
   return (
     <>
-      <div className="livrosCadastro">
-        <h1>Edição de Livros</h1>
-        <div>
-          {responseBook && (
-            <h3 className="responseText">Livro Alterado com Sucesso.</h3>
-          )}
-          <form id="formulario" onSubmit={editLivro}>
-            <div className="form-group">
-              <label>Titulo</label>
-              <input
-                type="text"
-                required
-                onChange={(event) => {
-                  setLivro({ ...livro, title: event.target.value });
-                }}
-                value={livro.title || ""}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label>Número de Páginas</label>
-              <input
-                type="text"
-                required
-                onChange={(event) => {
-                  setLivro({ ...livro, num_page: event.target.value });
-                }}
-                value={livro.num_page || ""}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label>ISBN</label>
-              <input
-                type="text"
-                required
-                onChange={(event) => {
-                  setLivro({ ...livro, isbn: event.target.value });
-                }}
-                value={livro.isbn || ""}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label>Editora</label>
-              <input
-                type="text"
-                required
-                onChange={(event) => {
-                  setLivro({ ...livro, publisher: event.target.value });
-                }}
-                value={livro.publisher || ""}
-              ></input>
-            </div>
-            <div className="form-group">
-              <button type="submit">Atualizar Livro</button>
-            </div>
-          </form>
+      {userOff ? (
+        <div className="erropage">
+          <h2> Faça Login para continuar </h2>
         </div>
-      </div>
+      ) : (
+        <div className="livrosCadastro">
+          <h1>Edição de Livros</h1>
+          <div>
+            {responseBook && (
+              <h3 className="responseText">Livro Alterado com Sucesso.</h3>
+            )}
+            <form id="formulario" onSubmit={editLivro}>
+              <div className="form-group">
+                <label>Titulo</label>
+                <input
+                  type="text"
+                  required
+                  onChange={(event) => {
+                    setLivro({ ...livro, title: event.target.value });
+                  }}
+                  value={livro.title || ""}
+                ></input>
+              </div>
+              <div className="form-group">
+                <label>Número de Páginas</label>
+                <input
+                  type="text"
+                  required
+                  onChange={(event) => {
+                    setLivro({ ...livro, num_page: event.target.value });
+                  }}
+                  value={livro.num_page || ""}
+                ></input>
+              </div>
+              <div className="form-group">
+                <label>ISBN</label>
+                <input
+                  type="text"
+                  required
+                  onChange={(event) => {
+                    setLivro({ ...livro, isbn: event.target.value });
+                  }}
+                  value={livro.isbn || ""}
+                ></input>
+              </div>
+              <div className="form-group">
+                <label>Editora</label>
+                <input
+                  type="text"
+                  required
+                  onChange={(event) => {
+                    setLivro({ ...livro, publisher: event.target.value });
+                  }}
+                  value={livro.publisher || ""}
+                ></input>
+              </div>
+              <div className="form-group">
+                <button type="submit">Atualizar Livro</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };
