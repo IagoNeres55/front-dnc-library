@@ -3,7 +3,7 @@ import "./index.scss";
 import { LivrosService } from "../../api/LivrosService";
 import Spinner from "../../components/Spinner/Spinner";
 import { useLocation, useNavigate } from "react-router-dom";
-import FormattedDate from "../../utility/formateDate";
+import FormattedDate from "../../utility/FormattedDate";
 import Toast from "../../components/Toast/Toast";
 
 const Autores = () => {
